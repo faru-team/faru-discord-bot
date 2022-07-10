@@ -8,7 +8,7 @@ import emoji
 import json
 import psycopg2
 
-prefix = os.getenv('DISCORD_BOT_PREFIX', default='🦑')
+prefix = os.getenv('DISCORD_BOT_PREFIX', default='!')
 token = os.environ['DISCORD_BOT_TOKEN']
 voicevox_key = os.environ['VOICEVOX_KEY']
 voicevox_speaker = os.getenv('VOICEVOX_SPEAKER', default='2')
@@ -33,7 +33,7 @@ async def on_guild_remove(guild):
     await client.change_presence(activity=discord.Game(name=presence))
 
 @client.command()
-async def 接続(ctx):
+async def vc(ctx):
     if ctx.message.guild:
         if ctx.author.voice is None:
             await ctx.send('ボイスチャンネルに接続してから呼び出してください。')
@@ -49,7 +49,7 @@ async def 接続(ctx):
                 await ctx.author.voice.channel.connect()
 
 @client.command()
-async def 切断(ctx):
+async def dc(ctx):
     if ctx.message.guild:
         if ctx.voice_client is None:
             await ctx.send('ボイスチャンネルに接続していません。')
@@ -246,8 +246,8 @@ async def on_command_error(ctx, error):
 @client.command()
 async def ヘルプ(ctx):
     message = f'''◆◇◆{client.user.name}の使い方◆◇◆
-{prefix}接続：ボイスチャンネルに接続します。
-{prefix}切断：ボイスチャンネルから切断します。
+{prefix}vc：ボイスチャンネルに接続します。
+{prefix}dc：ボイスチャンネルから切断します。
 {prefix}辞書確認：辞書に登録されている単語を確認します。
 {prefix}辞書追加 単語 よみがな：辞書に[単語]を[よみがな]として追加します。
 {prefix}辞書削除 単語：辞書から[単語]のよみがなを削除します。'''
